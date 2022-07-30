@@ -107,9 +107,10 @@ public class ServletEditItem extends HttpServlet {
 		DaoItemRepository daoitemrepository = new DaoItemRepository();
 		//request.getContentType();
 		System.out.println(base64_image);
-		if(part.getSize() > 0) {
-			try { 
-			//part.getSize() > 0
+		
+		if(true) {
+		try { 
+		if(base64_image != null) {
 			if (part.getSize() > 0) {
 				byte[] foto = org.apache.commons.io.IOUtils.toByteArray(part.getInputStream()); /*Convert imagem para byte*/
 				new Base64();
@@ -125,6 +126,16 @@ public class ServletEditItem extends HttpServlet {
 				
 				
 			}
+		}else {
+			
+				modelitem.setId(Long.valueOf(id));
+				modelitem.setContador_visita(0L);
+				modelitem.setTitulo(title);
+				modelitem.setHotlik(hotlink);
+				modelitem.setDescricao(description);
+				modelitem.setImagem_base64(null);
+				
+		}
 			daoitemrepository.SaveItem(modelitem);
 			
 			ModelItem newmodelitem  = daoitemrepository.get_item_by_title(modelitem.getTitulo());

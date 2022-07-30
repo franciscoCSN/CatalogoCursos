@@ -40,14 +40,26 @@ public class DaoItemRepository {
 
 		return false;
 		}else {
-			String sql = "UPDATE item_model SET v_counter=?,description=?,hotlink=?,base64_image=?,title=? WHERE id=?";
-			PreparedStatement sqlCommand = connection.prepareStatement(sql);
-			sqlCommand.setLong(1, modelitem.getContador_visita());
-			sqlCommand.setString(2, modelitem.getDescricao());
-			sqlCommand.setString(3, modelitem.getHotlik());
-			sqlCommand.setString(4, modelitem.getImagem_base64());
-			sqlCommand.setString(5, modelitem.getTitulo());
-			sqlCommand.setLong(6, modelitem.getId());
+			PreparedStatement sqlCommand;
+			if(modelitem.getImagem_base64() == null) {
+				String sql = "UPDATE item_model SET v_counter=?,description=?,hotlink=?,title=? WHERE id=?";
+				 sqlCommand = connection.prepareStatement(sql);
+				sqlCommand.setLong(1, modelitem.getContador_visita());
+				sqlCommand.setString(2, modelitem.getDescricao());
+				sqlCommand.setString(3, modelitem.getHotlik());
+				sqlCommand.setString(4, modelitem.getTitulo());
+				sqlCommand.setLong(5, modelitem.getId());
+			}else {
+				String sql = "UPDATE item_model SET v_counter=?,description=?,hotlink=?,base64_image=?,title=? WHERE id=?";
+				sqlCommand = connection.prepareStatement(sql);
+				sqlCommand.setLong(1, modelitem.getContador_visita());
+				sqlCommand.setString(2, modelitem.getDescricao());
+				sqlCommand.setString(3, modelitem.getHotlik());
+				sqlCommand.setString(4, modelitem.getImagem_base64());
+				sqlCommand.setString(5, modelitem.getTitulo());
+				sqlCommand.setLong(6, modelitem.getId());
+			}
+			
 			sqlCommand.executeUpdate();
 			System.out.println();
 			System.out.println("Item atualizado.");
